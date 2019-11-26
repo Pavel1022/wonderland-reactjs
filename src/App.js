@@ -1,12 +1,14 @@
 import React from 'react';
-import Headline from './components/Headline'
-import Header from './components/Header'
+import Title from './components/Headline.jsx'
+import Header from './components/Header.jsx'
+import Homepage from './components/Homepage.jsx'
 
 function App() {
   return (
     <div className="App">
-      <Headline />
+      <Title />
       <Header />
+      <Homepage />
     </div>
   );
 }

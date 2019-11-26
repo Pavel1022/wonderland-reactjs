@@ -11,14 +11,14 @@ import '../css/bootstrap.min.css';
 import '../css/jquery.timepicker.css';
 import '../css/magnific-popup.css';
 import '../css/open-iconic-bootstrap.min.css';
-// import '../css/owl.carousel.min.css';
 import '../css/owl.theme.default.min.css';
 import '../css/style.css';
 import HeaderBackgroundImage from '../images/bg_1.jpg';
 
+
 function Header() {
     return(
-        <div id="colorlib-page">
+      <React.Fragment>
         <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
         <aside id="colorlib-aside" role="complementary" class="js-fullheight">
           <div class="colorlib-header">
@@ -48,7 +48,7 @@ function Header() {
             <p class="pfooter">Created by: Pavel Milashki</p>
           </div>
         </aside>
-      </div>
+        </React.Fragment>
     );
 }
 
