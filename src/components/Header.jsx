@@ -1,55 +1,74 @@
-import React from 'react';
-import '../css/bootstrap/bootstrap-grid.css';
-import '../css/bootstrap/bootstrap-reboot.css';
-import '../css/css/mixins/_text-hide.css';
-import '../css/css/bootstrap-reboot.css';
-import '../css/ajax-loader.gif';
-import '../css/animate.css';
-import '../css/aos.css';
-import '../css/bootstrap-datepicker.css';
-import '../css/bootstrap.min.css';
-import '../css/jquery.timepicker.css';
-import '../css/magnific-popup.css';
-import '../css/open-iconic-bootstrap.min.css';
-import '../css/owl.theme.default.min.css';
-import '../css/style.css';
+import React, { Component } from 'react';
 import HeaderBackgroundImage from '../images/bg_1.jpg';
+import axios from 'axios';
+import cookie from 'react-cookies';
+import jwtDecode from 'jwt-decode';
+import { all } from 'q';
 
+class Header extends Component {
 
-function Header() {
-    return(
+  state = {
+    user: [],
+    isLogged: false
+  }
+
+  componentDidMount() {
+    if (cookie.load('x-auth-token')) {
+      const user = jwtDecode(cookie.load('x-auth-token'));
+
+      axios.post('http://localhost:3100/api/current/user', { userId: user.id })
+        .then(res => res.data)
+        .then((data) => {
+          this.setState({ user: data });
+          this.setState({ isLogged: true });
+        });
+    }
+
+  }
+  render() {
+    const path = window.location.pathname;
+    let allUsers;
+
+    if (path === '/users/all') {
+      allUsers = (<li className="colorlib-active"><a href="/users/all">All Users</a></li>);
+    } else {
+      allUsers = (<li><a href="/users/all">All Users</a></li>)
+    }
+
+    return (
       <React.Fragment>
-        <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
-        <aside id="colorlib-aside" role="complementary" class="js-fullheight">
-          <div class="colorlib-header">
-            <h1 id="colorlib-logo" class="mb-4"><a href="#" style={{backgroundImage: `url(${HeaderBackgroundImage})`}}>Wonder<span>Land</span></a></h1>
+        <a href="/" className="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
+        <aside id="colorlib-aside" className="js-fullheight">
+          <div className="colorlib-header">
+            <h1 id="colorlib-logo" className="mb-4"><a href="/" style={{ backgroundImage: `url(${HeaderBackgroundImage})` }}>Wonder<span>Land</span></a></h1>
           </div>
           <hr></hr>
           <nav id="colorlib-main-menu" role="navigation">
             <ul>
-              <li class="colorlib-active"><a href="#">Home</a></li>
-              {/* <li><a href="#">Home</a></li> */}
-              {/* <li class="colorlib-active"><a href="#">Profile</a></li> */}
-              <li><a href="#">Profile</a></li>
-              {/* <li class="colorlib-active"><a href="#">All Users</a></li> */}
-              <li><a href="#">All Users</a></li>
-              {/* <li class="colorlib-active"><a href="#">New Post</a></li> */}
-              <li><a href="#">New Post</a></li>
-              {/* <li class="colorlib-active"><a href="#">My Posts</a></li> */}
-              <li><a href="#">My Posts</a></li>
-              <li><a href="#">Logout</a></li>
-              {/* <li class="colorlib-active"><a href="#">Register</a></li> */}
-              <li><a href="#">Register</a></li>
-              {/* <li class="colorlib-active"><a href="#">Login</a></li> */}
-              <li><a href="#">Login</a></li>
+              {path === '/' ? (<li className="colorlib-active"><a href="/">Home</a></li>) : (<li><a href="/">Home</a></li>)}
+              {this.state.isLogged ? (
+                <React.Fragment>
+                  {path === '/user/profile' ? (<li className="colorlib-active"><a href="/user/profile">Profile</a></li>) : (<li><a href="/user/profile">Profile</a></li>)}
+                  {this.state.user.role === 'ADMIN' ? (allUsers) : ''}
+                  {path === '/register' ? (<li className="colorlib-active"><a href="#">New Post</a></li>) : (<li><a href="#">New Post</a></li>)}
+                  {path === '/register' ? (<li className="colorlib-active"><a href="#">My Posts</a></li>) : (<li><a href="#">My Posts</a></li>)}
+                  <li><a href="/logout">Logout</a></li>
+                </React.Fragment>
+              ) : (
+                  <React.Fragment>
+                    {path === '/user/register' ? (<li className="colorlib-active"><a href="/user/register">Register</a></li>) : (<li><a href="/user/register">Register</a></li>)}
+                    {path === '/user/login' ? (<li className="colorlib-active"><a href="/user/login">Login</a></li>) : (<li><a href="/user/login">Login</a></li>)}
+                  </React.Fragment>
+                )}
             </ul>
           </nav>
-          <div class="colorlib-footer">
-            <p class="pfooter">Created by: Pavel Milashki</p>
+          <div className="colorlib-footer">
+            <p className="pfooter">Created by: Pavel Milashki</p>
           </div>
         </aside>
-        </React.Fragment>
+      </React.Fragment>
     );
+  }
 }
 
 export default Header;

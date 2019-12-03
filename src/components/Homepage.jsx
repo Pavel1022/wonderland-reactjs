@@ -1,26 +1,19 @@
 import React from 'react';
-import '../css/bootstrap/bootstrap-grid.css';
-import '../css/bootstrap/bootstrap-reboot.css';
-import '../css/css/mixins/_text-hide.css';
-import '../css/css/bootstrap-reboot.css';
-import '../css/ajax-loader.gif';
-import '../css/animate.css';
-import '../css/aos.css';
-import '../css/bootstrap-datepicker.css';
-import '../css/bootstrap.min.css';
-import '../css/jquery.timepicker.css';
-import '../css/magnific-popup.css';
-import '../css/open-iconic-bootstrap.min.css';
-import '../css/owl.theme.default.min.css';
-import '../css/style.css';
-import Header from './Header'
-import Posts from './Posts'
+import LoggedIn from './LoggedIn'
+import LoggedOut from './LoggedOut'
+import cookie from 'react-cookies';
 
 
 function Homepage() {
+    let isLogged;
+  if (cookie.load('x-auth-token')) {
+    isLogged = true;
+  } else {
+    isLogged = false;
+  }
     return (
         <div id="colorlib-page">
-            <Posts />
+            {isLogged === true ? (<LoggedIn />) : (<LoggedOut />)}
         </div>
     );
 }

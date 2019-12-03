@@ -10,6 +10,7 @@ function Headline() {
         <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet"></link>
         <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet"></link>
         <link href="https://fonts.googleapis.com/css?family=Abril+Fatface&display=swap" rel="stylesheet"></link>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,900" rel="stylesheet"></link>
 
         <link rel="stylesheet" href="./css/open-iconic-bootstrap.min.css"></link>
         <link rel="stylesheet" href="./css/animate.css"></link>
