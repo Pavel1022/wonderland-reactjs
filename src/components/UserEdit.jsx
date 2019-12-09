@@ -41,85 +41,78 @@ class UserEdit extends Component {
     }
 
     imageHandleChange = (event) => {
-        this.setState({ image: event.currentTarget.files });
-    }
-
-    saveChanges() {
+        this.setState({ image: document.getElementsByName("image")[0].files[0] });
+        console.log(document.getElementsByName("image")[0].files[0]);
 
     }
 
     handleSubmit(event) {
         event.preventDefault();
-        let newData = {};
+        let newData = new FormData();
         this.state.errors = [];
 
         if (!this.state.firstName.length > 0) {
-            newData = { ...newData, firstName: this.state.user.firstName }
+            newData.append('firstName', this.state.user.firstName)
         } else {
             if (this.state.firstName.length >= 4 && this.state.firstName.length <= 16) {
-                newData = { ...newData, firstName: this.state.firstName }
+                newData.appen('firstName', this.state.firstName)
             } else {
                 this.state.errors.push('First name must have minimum 4 sumbols and maximum 16!');
             }
         }
         if (!this.state.lastName.length > 0) {
-            newData = { ...newData, lastName: this.state.user.lastName }
+            newData.append('lastName', this.state.user.lastName)
         } else {
             if (this.state.lastName.length >= 4 && this.state.lastName.length <= 16) {
-                newData = { ...newData, lastName: this.state.lastName }
+                newData.append('lastName', this.state.lastName)
             } else {
                 this.state.errors.push('Last name must have minimum 4 sumbols and maximum 16!');
             }
         }
         if (!this.state.email.length > 0) {
-            newData = { ...newData, email: this.state.user.email }
+            newData.append('email', this.state.user.email)
         } else {
             const regexEmail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-            if(!regexEmail.test(this.state.email)) {
+            if (!regexEmail.test(this.state.email)) {
                 this.state.errors.push('Invalid email!');
             } else {
-            newData = { ...newData, email: this.state.email }
+                newData.append('email', this.state.email)
             }
         }
         if (!this.state.phone.length > 0) {
-            newData = { ...newData, phone: this.state.user.phone }
+            newData.append('phone', this.state.user.phone)
         } else {
             const regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
             if (regex.test(this.state.phone)) {
-                newData = { ...newData, phone: this.state.phone }
+                newData.append('phone', this.state.phone)
             } else {
                 this.state.errors.push('Invalid phone number!');
             }
-            newData = { ...newData, phone: this.state.phone }
+            newData.append('phone', this.state.phone)
         }
 
         if (this.state.errors.length > 0) {
             this.forceUpdate();
         } else {
-            const reader = new FileReader();
-            const file = this.state.image[0];
+            const file = this.state.image;
             if (file) {
+
                 if (file.type === 'image/jpeg' || file.type === 'image/png') {
-                    reader.readAsDataURL(file);
-                    reader.onload = (e) => {
-                        const image = e.target.result;
-                        newData = { ...newData, image }
+                    newData.append('image', file)
 
-                        const url = `http://localhost:3100/api/edit/user/${this.state.user.id}`;
-                        axios.post(url, newData).then(res => {
+                    const url = `http://localhost:3100/api/edit/user/${this.state.user.id}`;
+                    axios.post(url, newData).then(res => {
 
-                            console.log(file.type);
 
-                            window.location.href = '/user/profile';
-                        });
-                    }
+                        window.location.href = '/user/profile';
+                    });
                 } else {
                     this.state.errors.push('Image must be jpg or png type!');
                     this.forceUpdate();
                 }
 
             } else {
-                newData = { ...newData, image: this.state.user.image }
+                newData.append('image', this.state.user.image)
 
                 const url = `http://localhost:3100/api/edit/user/${this.state.user.id}`;
                 axios.post(url, newData).then(res => {
@@ -131,7 +124,7 @@ class UserEdit extends Component {
 
     componentDidMount() {
         if (!cookie.load('x-auth-token')) {
-            window.location.href = '/';
+            return window.location.href = '/user/login';
         }
         const user = jwtDecode(cookie.load('x-auth-token'));
         const selectedUserId = Number(this.props.match.params.id);

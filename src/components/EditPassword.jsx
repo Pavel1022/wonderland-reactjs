@@ -20,7 +20,7 @@ class EditPassword extends Component {
 
     componentDidMount() {
         if (!cookie.load('x-auth-token')) {
-            window.location.href = '/';
+            return window.location.href = '/user/login';
         }
         const user = jwtDecode(cookie.load('x-auth-token'));
         const selectedUserId = Number(this.props.match.params.id);

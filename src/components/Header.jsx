@@ -3,7 +3,6 @@ import HeaderBackgroundImage from '../images/bg_1.jpg';
 import axios from 'axios';
 import cookie from 'react-cookies';
 import jwtDecode from 'jwt-decode';
-import { all } from 'q';
 
 class Header extends Component {
 
@@ -50,7 +49,7 @@ class Header extends Component {
                 <React.Fragment>
                   {path === '/user/profile' ? (<li className="colorlib-active"><a href="/user/profile">Profile</a></li>) : (<li><a href="/user/profile">Profile</a></li>)}
                   {this.state.user.role === 'ADMIN' ? (allUsers) : ''}
-                  {path === '/register' ? (<li className="colorlib-active"><a href="#">New Post</a></li>) : (<li><a href="#">New Post</a></li>)}
+                  {path === '/post/create' ? (<li className="colorlib-active"><a href="/post/create">New Post</a></li>) : (<li><a href="/post/create">New Post</a></li>)}
                   {path === '/register' ? (<li className="colorlib-active"><a href="#">My Posts</a></li>) : (<li><a href="#">My Posts</a></li>)}
                   <li><a href="/logout">Logout</a></li>
                 </React.Fragment>

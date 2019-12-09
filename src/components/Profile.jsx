@@ -8,6 +8,9 @@ class Profile extends Component {
         user: []
     }
     componentDidMount() {
+        if(!cookie.load('x-auth-token')) {
+            return window.location.href = '/user/login';
+        }
         const user = jwtDecode(cookie.load('x-auth-token'));
 
         axios.post('http://localhost:3100/api/current/user', { userId: user.id })
@@ -30,7 +33,7 @@ class Profile extends Component {
                                 <div class="row pt-md-4">
                                     <div class="col-md-12">
                                         <div class="blog-entry ftco-animate d-md-flex fadeInUp ftco-animated">
-                                        <a class="img img-2" style={{backgroundImage: `url(${this.state.user.image})`}} aria-disabled="true"></a>
+                                        <a class="img img-2" style={{backgroundImage: `url(http://localhost:3100/public/user/${this.state.user.image}.jpg)`}} aria-disabled="true"></a>
                                             <div class="text text-2 pl-md-4">
                                                     <div class="meta-wrap">
                                                         <h3 class="mb-2">{this.state.user.firstName} {this.state.user.lastName}</h3>

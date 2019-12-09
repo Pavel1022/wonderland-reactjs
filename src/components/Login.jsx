@@ -29,13 +29,13 @@ class Login extends Component {
         event.preventDefault();
         this.state.errors = [];
 
-        axios.post('http://localhost:3100/api/login/user', { 
+        axios.post('http://localhost:3100/api/login/user', {
             username: this.state.username,
             password: this.state.password
-         }).then(res => {
+        }).then(res => {
             if (res.data !== 'Wrong password or username!') {
                 cookie.save('x-auth-token', res.data, { path: '/' });
-                window.location.href = '/'
+                window.location.href = '/';
             } else {
                 this.state.errors.push(res.data);
                 this.forceUpdate();
