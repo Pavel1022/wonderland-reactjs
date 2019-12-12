@@ -87,9 +87,7 @@ class Register extends Component {
                 lastName: this.state.lastName,
                 email: this.state.email,
                 phone: this.state.phone
-            }).then((res) => {
-                console.log(res);
-                
+            }).then((res) => {                
                 if (res.data === 'Username already taken!') {
                     this.state.errors.push(res.data);
                     this.forceUpdate();

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import cookie from 'react-cookies';
 import jwtDecode from 'jwt-decode';
-import Comment from './comments/Comment';
-import LoggedInPost from './HomepagePostsViews/loggedInPost'
+import Comment from '../Comment components/comments/Comment';
+import LoggedInPost from './HomepagePostsViews/loggedInPost';
 
 class PostPage extends Component {
     constructor(props) {
@@ -91,44 +91,44 @@ class PostPage extends Component {
                 <div id="colorlib-main">
                     <section className="ftco-section">
                         <div className="container">
-                            <div class="row d-flex">
-                                <div class="col-xl-8 px-md-5 py-5">
-                                    <div class="row pt-md-4">
-                                        <div class="col-md-12">
-                                            <div class="blog-entry-2 ftco-animate fadeInUp ftco-animated">
-                                                <a class="img" style={{ backgroundImage: `url(${this.state.post.image})` }} aria-disabled="true"></a>
-                                                <div class="text pt-4">
-                                                    <h3 class="mb-4"><a aria-disabled="true">{this.state.post.title}</a></h3>
-                                                    <p class="mb-4" style={{ display: 'block', width: '623px', wordWrap: 'break-word' }}>{this.state.post.description}</p>
-                                                    <div class="author mb-4 d-flex align-items-center">
-                                                        <a class="img" style={{ backgroundImage: `url(${this.state.post.user.image})` }}></a>
-                                                        <div class="ml-3 info">
+                            <div className="row d-flex">
+                                <div className="col-xl-8 px-md-5 py-5">
+                                    <div className="row pt-md-4">
+                                        <div className="col-md-12">
+                                            <div className="blog-entry-2 ftco-animate fadeInUp ftco-animated">
+                                                <a className="img" style={{ backgroundImage: `url(http://localhost:3100/public/post/${this.state.post.image}.jpg)` }} aria-disabled="true"></a>
+                                                <div className="text pt-4">
+                                                    <h3 className="mb-4"><a aria-disabled="true">{this.state.post.title}</a></h3>
+                                                    <p className="mb-4" style={{ display: 'block', width: '623px', wordWrap: 'break-word' }}>{this.state.post.description}</p>
+                                                    <div className="author mb-4 d-flex align-items-center">
+                                                        <a className="img" style={{ backgroundImage: `url(http://localhost:3100/public/user/${this.state.post.user.image}.jpg)` }}></a>
+                                                        <div className="ml-3 info">
                                                             {this.state.post.user.role === 'ADMIN' ? (<span>Posted by Admin</span>) : (<span>Posted by</span>)}
                                                             <h3><b>{this.state.post.user.firstName} {this.state.post.user.lastName}</b>, <span>{date.split('T')[0].split('-')[2] + '-' + date.split('T')[0].split('-')[1] + '-' + date.split('T')[0].split('-')[0]}</span></h3>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 {this.state.currentUser.id === this.state.post.userId || this.state.currentUser.role === 'ADMIN' ? (<React.Fragment>
-                                                    <a class="btn btn-success" href={'/post/edit/' + this.state.post.id} role="button" style={{ marginLeft: "62%" }}>Edit Post</a>
-                                                    <a class="btn btn-danger" href={'/post/delete/' + this.state.post.id} role="button" style={{ marginLeft: "2%" }}>Delete Post</a>
+                                                    <a className="btn btn-success" href={'/post/edit/' + this.state.post.id} role="button" style={{ marginLeft: "62%" }}>Edit Post</a>
+                                                    <a className="btn btn-danger" href={'/post/delete/' + this.state.post.id} role="button" style={{ marginLeft: "2%" }}>Delete Post</a>
                                                 </React.Fragment>) : ''}
                                                 <br /><br />
                                                 {this.state.currentUser.ban ? (<React.Fragment>
                                                     <p style={{ color: '#C82829' }}><strong>You have BAN !</strong></p>
-                                                    <div class="form-group">
-                                                        <textarea name="comment" cols="30" rows="7" class="form-control" placeholder="Comment" disabled></textarea>
+                                                    <div className="form-group">
+                                                        <textarea name="comment" cols="30" rows="7" className="form-control" placeholder="Comment" disabled></textarea>
                                                     </div>
                                                 </React.Fragment>) : (
                                                         <form onSubmit={this.handleSubmit}>
-                                                            <div class="form-group">
-                                                                <textarea name="comment" cols="30" rows="7" class="form-control" placeholder="Comment" onChange={this.handleComment}></textarea>
+                                                            <div className="form-group">
+                                                                <textarea name="comment" cols="30" rows="7" className="form-control" placeholder="Comment" onChange={this.handleComment}></textarea>
                                                             </div>
-                                                            <div class="form-group">
-                                                                <input type="submit" value="Comment" class="btn btn-primary py-3 px-5" />
+                                                            <div className="form-group">
+                                                                <input type="submit" value="Comment" className="btn btn-primary py-3 px-5" />
                                                             </div>
                                                         </form>
                                                     )}
-                                                <div class="bg-light p-5 contact-form">
+                                                <div className="bg-light p-5 contact-form">
                                                     <h3>Comments:</h3>
                                                     <hr />
                                                     {this.state.comments.length > 0 ? '' : (<h3>No comments</h3>)}

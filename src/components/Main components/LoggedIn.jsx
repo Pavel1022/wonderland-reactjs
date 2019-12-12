@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import LoggedInPost from './HomepagePostsViews/loggedInPost'
+import LoggedInPost from '../Post components/HomepagePostsViews/loggedInPost'
 import axios from 'axios';
 import cookie from 'react-cookies';
 import jwtDecode from 'jwt-decode';
-import MainPost from './HomepagePostsViews/mainPost';
+import MainPost from '../Post components/HomepagePostsViews/mainPost';
 
 class LoggedInView extends Component {
     constructor(props) {
@@ -17,18 +17,14 @@ class LoggedInView extends Component {
 
     componentDidMount() {
         const user = jwtDecode(cookie.load('x-auth-token'));
-        console.log();
 
         axios.get('http://localhost:3100/api/post/all').then(res => {
             this.setState({ posts: res.data });
-            console.log(res.data);
-
             this.forceUpdate();
         });
 
         axios.post('http://localhost:3100/api/post/mypost', { id: user.id }).then(res => {
             this.setState({ myPosts: res.data });
-            console.log(res);
             this.forceUpdate();
         });
 
@@ -47,7 +43,7 @@ class LoggedInView extends Component {
             } else {
                 commentObj[`${comment.postId}`] = 1;
             }
-            
+
         });
         return (
             <React.Fragment>
@@ -67,7 +63,7 @@ class LoggedInView extends Component {
                                             </div>
                                         ) : ''}
                                         {this.state.posts.map(function (post) {
-                                            return <MainPost post={post} commentObj={commentObj}/>
+                                            return <MainPost post={post} commentObj={commentObj} />
                                         })}
                                     </div>
                                 </div>
@@ -75,7 +71,7 @@ class LoggedInView extends Component {
                                     <div className="sidebar-box ftco-animate fadeInUp ftco-animated">
                                         <h3 className="sidebar-heading" style={{ textAlign: "center" }}>My Posts</h3>
                                         {this.state.myPosts.map(function (post) {
-                                            return <LoggedInPost post={post} commentObj={commentObj}/>
+                                            return <LoggedInPost post={post} commentObj={commentObj} />
                                         })}
                                         {this.state.myPosts.length > 0 ? '' : (<p style={{ textAlign: "center" }}>You haven't posts ? <a href="/post/create">Create one !</a></p>)}
                                     </div>

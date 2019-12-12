@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import cookie from 'react-cookies';
 import jwtDecode from 'jwt-decode';
-import '../css/fileStyle.scss'
+import '../../css/fileStyle.scss'
 
 class UserEdit extends Component {
 
@@ -42,8 +42,6 @@ class UserEdit extends Component {
 
     imageHandleChange = (event) => {
         this.setState({ image: document.getElementsByName("image")[0].files[0] });
-        console.log(document.getElementsByName("image")[0].files[0]);
-
     }
 
     handleSubmit(event) {
@@ -55,7 +53,7 @@ class UserEdit extends Component {
             newData.append('firstName', this.state.user.firstName)
         } else {
             if (this.state.firstName.length >= 4 && this.state.firstName.length <= 16) {
-                newData.appen('firstName', this.state.firstName)
+                newData.append('firstName', this.state.firstName)
             } else {
                 this.state.errors.push('First name must have minimum 4 sumbols and maximum 16!');
             }
@@ -133,7 +131,6 @@ class UserEdit extends Component {
             .then(res => res.data)
             .then((data) => {
                 if (data.id === selectedUserId) {
-                    console.log(true);
                     this.setState({ hidden: false });
                 } else {
                     window.location.href = '/';
@@ -151,11 +148,11 @@ class UserEdit extends Component {
                         <div className="container">
                             <form onSubmit={this.handleSubmit} className="bg-light p-5 contact-form" encType="multipart/form-data">
                                 <h3 className="mb-4" style={{ textAlign: "center" }}>Edit your profile !</h3>
-                                <div class="alert alert-warning" role="alert">
+                                <div className="alert alert-warning" role="alert">
                                     <p>If you leave one of the fields blank, the correct date will not change!</p>
                                 </div>
                                 {this.state.errors.length > 0 ? (
-                                    <div class="alert alert-danger">
+                                    <div className="alert alert-danger">
                                         <ul>
                                             {this.state.errors.map(function (error) {
                                                 return <li>{error}</li>

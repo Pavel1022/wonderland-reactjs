@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Testimage from '../images/image_1.jpg'
 import axios from 'axios';
 
 class loggedOutView extends Component {
@@ -30,7 +29,7 @@ class loggedOutView extends Component {
             } else {
                 commentObj[`${comment.postId}`] = 1;
             }
-            
+
         });
 
         return this.state.hidden ? '' : (
@@ -42,26 +41,21 @@ class loggedOutView extends Component {
                                 <div className="col-md-12">
                                     {this.state.posts.length === 0 ? (
                                         <React.Fragment>
-                                            <div className="blog-entry ftco-animate d-md-flex fadeInUp ftco-animated">
-                                                <a className="img img-2" aria-disabled="true" style={{ backgroundImage: `url(${Testimage})` }}></a>
-                                                <div className="text text-2 pl-md-4">
-                                                    <h3 className="mb-2"><a aria-disabled="true">No posts</a></h3>
-                                                </div>
-                                            </div>
+                                            <h3 style={{ textAlign: 'center' }}>No Posts</h3>
                                         </React.Fragment>
                                     ) : ''}
                                     {this.state.posts.map(function (post) {
                                         return (
                                             <React.Fragment>
                                                 <div className="blog-entry ftco-animate d-md-flex fadeInUp ftco-animated">
-                                                    <a className="img img-2" aria-disabled="true" style={{ backgroundImage: `url(${post.image})` }}></a>
+                                                    <a className="img img-2" aria-disabled="true" style={{ backgroundImage: `url(http://localhost:3100/public/post/${post.image}.jpg)` }}></a>
                                                     <div className="text text-2 pl-md-4">
                                                         <h3 className="mb-2"><a aria-disabled="true">{post.title}</a></h3>
                                                         <div className="meta-wrap">
                                                             <p className="meta">
-                                                                <span><i className="icon-calendar mr-2"></i>{new Date(post.createdAt).toLocaleDateString().replace('/', '-').replace('/', '-')}</span>
+                                                                <span><i className="icon-calendar mr-2"></i>{post.createdAt.split('T')[0].split('-')[2] + '-' + post.createdAt.split('T')[0].split('-')[1] + '-' + post.createdAt.split('T')[0].split('-')[0]}</span>
                                                                 <span><i className="icon-calendar mr-2"></i>/</span>
-                                                                <span><i className="icon-calendar mr-2"></i>{'Comments: ' + commentObj[`${post.id}`]}</span>
+                                                                <span><i className="icon-calendar mr-2"></i>Comments: {commentObj[`${post.id}`] !== undefined ? commentObj[`${post.id}`] : '0'}</span>
                                                             </p>
                                                         </div>
                                                         <p><a href={'/post/view/' + post.id} className="btn-custom">Read More <span className="ion-ios-arrow-forward"></span></a></p>

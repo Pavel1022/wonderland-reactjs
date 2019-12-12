@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import HeaderBackgroundImage from '../images/bg_1.jpg';
+import HeaderBackgroundImage from '../../images/bg_1.jpg';
 import axios from 'axios';
 import cookie from 'react-cookies';
 import jwtDecode from 'jwt-decode';
@@ -50,7 +50,7 @@ class Header extends Component {
                   {path === '/user/profile' ? (<li className="colorlib-active"><a href="/user/profile">Profile</a></li>) : (<li><a href="/user/profile">Profile</a></li>)}
                   {this.state.user.role === 'ADMIN' ? (allUsers) : ''}
                   {path === '/post/create' ? (<li className="colorlib-active"><a href="/post/create">New Post</a></li>) : (<li><a href="/post/create">New Post</a></li>)}
-                  {path === '/register' ? (<li className="colorlib-active"><a href="#">My Posts</a></li>) : (<li><a href="#">My Posts</a></li>)}
+                  {path === '/post/my/posts' ? (<li className="colorlib-active"><a href="/post/my/posts">My Posts</a></li>) : (<li><a href="/post/my/posts">My Posts</a></li>)}
                   <li><a href="/logout">Logout</a></li>
                 </React.Fragment>
               ) : (
